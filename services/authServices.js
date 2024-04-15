@@ -2,8 +2,11 @@ import { UserModel } from "../models/userModel.js";
 import dotenv from 'dotenv'
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
+import bcryptjs from "bcryptjs";
 
-dotenv.config();
+dotenv.config({
+  path: './envs/development.env'
+});
 
 const {
     SECRET_KEY,

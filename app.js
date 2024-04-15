@@ -6,7 +6,9 @@ import dotenv from "dotenv";
 import authRouter from './routes/authRouter.js'
 import cardsRouter from "./routes/cardsRouter.js";
 
-dotenv.config();
+dotenv.config({
+  path: './envs/development.env'
+});
 
 export const app = express();
 

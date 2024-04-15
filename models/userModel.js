@@ -19,7 +19,7 @@ const userSchema = new Schema(
       avatarURL: { type: String, default: "" },
       token: { type: String, default: "" },
     },
-    { versionKey: false, timestamps: true }
+    { versionKey: false, timestamps: false }
   );
   
   userSchema.methods.hashPassword = async function () {
