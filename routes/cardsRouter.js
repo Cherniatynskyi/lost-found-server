@@ -1,7 +1,6 @@
 import express from "express";
 import { authenticate } from "../middlewares/authenticate.js";
 import { validateBody } from "../middlewares/validateBody.js";
-import { isValidId } from "../middlewares/isValidId.js";
 import * as schemas from "../schemas/cardSchema.js";
 import * as cardServices from "../controllers/cardControllers.js";
 
@@ -17,15 +16,16 @@ cardsRouter.post(
 cardsRouter.get("/lost", cardServices.getAllLost);
 cardsRouter.get("/found", cardServices.getAllFound);
 
-cardsRouter.get("/:ownerId", cardServices.getOwnerCards);
+cardsRouter.get("/:ownerId", authenticate, cardServices.getOwnerCards);
 
-cardsRouter.get("/:type",);
 
 // cardsRouter.get("/recent",);
 
+cardsRouter.put("/:cardId", authenticate,
+  validateBody(schemas.updateCardSchema),
+  cardServices.updateCardCtrl
+);
   
-cardsRouter.put("/:cardId",);
-  
-cardsRouter.delete( "/:cardId",);
+cardsRouter.delete("/:cardId", authenticate, cardServices.deleteCard);
 
 export default cardsRouter;

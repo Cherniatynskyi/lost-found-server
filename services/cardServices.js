@@ -28,6 +28,11 @@ export const getAllFound = async (req) => {
 export const getOwnerCards = async (owner, req) => {
     const {page=1, limit=10} = req.query
     const skip = (page-1) * limit
+
+    if(`${req.user._id}` !== req.params.ownerId){
+      throw HttpError(401);
+    }
+
     const cards = await CardModel.find({owner}, "", {skip, limit});
   
     if (!cards) {

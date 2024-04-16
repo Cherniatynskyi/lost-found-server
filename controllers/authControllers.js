@@ -15,7 +15,7 @@ export const registerUser = trycatchFunc(async (req, res) => {
     });
   
     res.status(201).json({
-      user: { name, email, avatarURL: newUser.avatarURL },
+      user: { _id, name, email, avatarURL: newUser.avatarURL },
       token: newUser.token,
     });
   });
@@ -39,6 +39,7 @@ export const loginUser = trycatchFunc(async (req, res) => {
   
     res.json({
       user: {
+        id: newUser._id,
         name: newUser.name,
         email: newUser.email,
         avatarURL: newUser.avatarURL,
@@ -48,8 +49,8 @@ export const loginUser = trycatchFunc(async (req, res) => {
   });
   
 export const getCurrentUser = trycatchFunc(async (req, res) => {
-    const { name, email, avatarURL, theme } = req.user;
-    res.json({ name, email, avatarURL });
+    const { _id, name, email, avatarURL } = req.user;
+    res.json({ _id, name, email, avatarURL });
 });
   
   export const logoutUser = trycatchFunc(async (req, res) => {
