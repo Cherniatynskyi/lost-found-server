@@ -15,7 +15,7 @@ export const registerUser = trycatchFunc(async (req, res) => {
     });
   
     res.status(201).json({
-      user: { _id, name, email, avatarURL: newUser.avatarURL },
+      user: { name, email, avatarURL: newUser.avatarURL },
       token: newUser.token,
     });
   });
