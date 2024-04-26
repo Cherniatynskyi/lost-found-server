@@ -1,6 +1,7 @@
 import { trycatchFunc } from "../helpers/trycatchFunc.js";
 import { HttpError } from "../helpers/HttpError.js";
 import * as cardServices from "../services/cardServices.js";
+import * as authServices from '../services/authServices.js'
 
 export const getAllLost = trycatchFunc(async (req, res) => {
   const cards = await cardServices.getAllLost(req);
@@ -24,8 +25,14 @@ export const getOwnerCards = trycatchFunc(async (req, res) => {
 export const createCard = trycatchFunc(async (req, res) => {
   const { _id: owner } = req.user;
   const { body } = req;
+  let photo_url
 
-  const newCard = await cardServices.addCards(owner, body);
+  if (req.file) {
+    const { path: tmpUpload } = req.file;
+    photo_url = await authServices.saveAvatar(tmpUpload);
+  }
+
+  const newCard = await cardServices.addCards(owner, {...body, photo_url});
 
   res.status(201).json(newCard);
 });

@@ -19,6 +19,7 @@ authRouter.post(
   );
 authRouter.post("/logout", authenticate, authControllers.logoutUser);
 authRouter.get("/current", authenticate, authControllers.getCurrentUser);
+
 authRouter.put(
     "/update",
     authenticate,

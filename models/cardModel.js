@@ -32,6 +32,10 @@ const cardSchema = new Schema(
         type: String,
         required: true
       },
+      category: {
+        type: String,
+        required: true
+      },
       location: {
         type: String,
         required: true,
@@ -43,6 +47,9 @@ const cardSchema = new Schema(
       },
       price:{
         type: String,
+      },
+      contact:{
+        type: String
       },
       photo_url: { type: String, default: "" },   
     },
