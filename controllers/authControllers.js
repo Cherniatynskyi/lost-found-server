@@ -61,7 +61,6 @@ export const getCurrentUser = trycatchFunc(async (req, res) => {
   
   export const updateUser = trycatchFunc(async (req, res) => {
     const { _id } = req.user;
-    console.log(req.file)
     let avatarURL;
     if (req.file) {
       const { path: tmpUpload } = req.file;

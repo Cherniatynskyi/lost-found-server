@@ -2,9 +2,23 @@ import { HttpError } from "../helpers/HttpError.js";
 import { CardModel } from "../models/cardModel.js";
 
 export const getAllLost = async (req) => {
-    const {page=1, limit=10} = req.query
+    const {page=1, limit=10, location, category} = req.query
     const skip = (page-1) * limit
-    const cards = await CardModel.find({type:"lost"}, "" ,{skip, limit});
+
+
+    if((location==='all') & (category !== "all")){
+      const cards = await CardModel.find({type: "lost", category}, "" ,{skip, limit});
+      return cards
+    }
+    if((category==='all') & (location !== "all")){
+      const cards = await CardModel.find({type: "lost", location}, "" ,{skip, limit});
+      return cards
+    }
+    if((category==='all') & (location==='all')){
+      const cards = await CardModel.find({type: "lost"}, "" ,{skip, limit});
+      return cards
+    }
+    const cards = await CardModel.find({type: "lost", location, category}, "" ,{skip, limit});
   
     if (!cards) {
       throw HttpError(404);
@@ -14,9 +28,21 @@ export const getAllLost = async (req) => {
 };
 
 export const getAllFound = async (req) => {
-  const {page=1, limit=10} = req.query
+  const {page=1, limit=10,  location, category} = req.query
   const skip = (page-1) * limit
-  const cards = await CardModel.find({type: "found"}, "" ,{skip, limit});
+  if((location==='all') & (category !== "all")){
+    const cards = await CardModel.find({type: "found", category}, "" ,{skip, limit});
+    return cards
+  }
+  if((category==='all') & (location !== "all")){
+    const cards = await CardModel.find({type: "found", location}, "" ,{skip, limit});
+    return cards
+  }
+  if((category==='all') & (location==='all')){
+    const cards = await CardModel.find({type: "found"}, "" ,{skip, limit});
+    return cards
+  }
+  const cards = await CardModel.find({type: "found", location, category}, "" ,{skip, limit});
 
   if (!cards) {
     throw HttpError(404);
@@ -28,6 +54,8 @@ export const getAllFound = async (req) => {
 export const getOwnerCards = async (owner, req) => {
     const {page=1, limit=10} = req.query
     const skip = (page-1) * limit
+
+    console.log(req, "AAAAAAA")
 
     if(`${req.user._id}` !== req.params.ownerId){
       throw HttpError(401);
