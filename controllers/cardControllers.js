@@ -55,8 +55,11 @@ export const updateCardCtrl = trycatchFunc(async (req, res) => {
   const { body } = req;
   const { _id: owner } = req.user;
 
-  if (!body || Object.keys(body).length === 0) {
-    throw HttpError(400, "missing field");
+  let photo_url
+
+  if (req.file) {
+    const { path: tmpUpload } = req.file;
+    photo_url = await authServices.saveAvatar(tmpUpload);
   }
 
   const updatedCard = await cardServices.updateCard(id, owner, body);

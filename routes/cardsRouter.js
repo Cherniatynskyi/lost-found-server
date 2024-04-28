@@ -28,6 +28,7 @@ cardsRouter.get("/:ownerId", authenticate, cardServices.getOwnerCards);
 cardsRouter.put(
   "/:cardId",
   authenticate,
+  upload.single("photo_url"),
   validateBody(schemas.updateCardSchema),
   cardServices.updateCardCtrl
 );

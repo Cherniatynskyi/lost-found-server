@@ -59,7 +59,5 @@ export const updateCardSchema = Joi.object({
   contact: Joi.string().label("Contact").messages({
     "string.empty": '"Price" cannot be an empty field',
   }),
-  photo_url: Joi.string().label("Photo").messages({
-    "string.empty": '"Photo" cannot be an empty field',
-  }),
+  photo_url: Joi.any()
 });
